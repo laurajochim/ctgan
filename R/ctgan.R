@@ -4,24 +4,24 @@
 #'
 #' @import forge
 #' @param embedding_dim Dimension of embedding layer.
-#' @param gen_dim Dimensions of generator layers.
-#' @param dis_dim Dimensions of discriminator layers.
+#' @param generator_dim Dimensions of generator layers.
+#' @param discriminator_dim Dimensions of discriminator layers.
 #' @param l2_scale ADAM weight decay.
 #' @param batch_size Batch size.
 #' @export
-ctgan <- function(embedding_dim = 128, gen_dim = c(256, 256),
-                  dis_dim = c(256, 256), l2_scale = 1e-6, batch_size = 500) {
+ctgan <- function(embedding_dim = 128, generator_dim = c(256, 256),
+                  discriminator_dim = c(256, 256), l2_scale = 1e-6, batch_size = 500) {
   embedding_dim <- cast_integer(embedding_dim)
-  gen_dim <- cast_integer(gen_dim)
-  dis_dim <- cast_integer(dis_dim)
+  generator_dim <- cast_integer(generator_dim)
+  discriminator_dim <- cast_integer(discriminator_dim)
   l2_scale <- cast_scalar_double(l2_scale)
   batch_size <- cast_scalar_integer(batch_size)
 
   ctgan <- reticulate::import("ctgan")
-  model <- ctgan$CTGANSynthesizer(
+  model <- ctgan$CTGAN(
     embedding_dim = embedding_dim,
-    gen_dim = gen_dim,
-    dis_dim = dis_dim,
+    generator_dim = generator_dim,
+    discriminator_dim = discriminator_dim,
     l2scale = l2_scale,
     batch_size = batch_size
   )
