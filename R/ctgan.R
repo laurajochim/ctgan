@@ -22,7 +22,7 @@ ctgan <- function(embedding_dim = 128, generator_dim = c(256, 256),
     embedding_dim = embedding_dim,
     generator_dim = generator_dim,
     discriminator_dim = discriminator_dim,
-    l2scale = l2_scale,
+    l2_scale = l2_scale,
     batch_size = batch_size
   )
 
