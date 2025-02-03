@@ -39,7 +39,7 @@ CTGANModel <- R6::R6Class(
       private$model_obj <- model_obj
       private$metadata <- metadata
     },
-    fit = function(train_data, epochs, log_frequency) {
+    fit = function(train_data, epochs) {
       c(train_data, metadata) %<-% transform_data(train_data)
 
       categorical_col_indices <- which(metadata$col_info$type == "nominal") - 1
@@ -55,7 +55,6 @@ CTGANModel <- R6::R6Class(
         train_data = as.matrix(train_data),
         discrete_columns = categorical_columns,
         epochs = epochs,
-        log_frequency = log_frequency
       )
     },
     sample = function(n) {
