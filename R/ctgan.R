@@ -42,7 +42,14 @@ CTGANModel <- R6::R6Class(
     fit = function(train_data, epochs) {
       c(train_data, metadata) %<-% transform_data(train_data)
 
-      categorical_col_indices <- which(metadata$col_info$type == "nominal") - 1
+      # Force all columns to numeric.
+      # This is important if any column might still be character.
+      # (Note: this assumes that the transformation has already encoded categorical values as integers.)
+      train_data <- as.data.frame(lapply(train_data, as.numeric))
+
+      # Get indices of discrete (categorical) columns from the metadata.
+      # Adjusting here to ensure we're dealing with plain characters and integers.
+      categorical_col_indices <- as.integer(which(as.character(metadata$col_info$type) == "nominal")) - 1
       categorical_columns <- if (length(categorical_col_indices)) {
         reticulate::tuple(as.list(categorical_col_indices))
       } else {
